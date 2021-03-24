@@ -10,7 +10,7 @@ This repository was created for the Robotics and Autonomous Systems 2021 course.
 
 ## Usage
 
-### Creating maps with nodes
+### Creating maps with `MapNodes`
 
 A simple example where we create two nodes and connects them to each other. 
 Note that the id given as a second parameter to `MapNode` must be unique.
