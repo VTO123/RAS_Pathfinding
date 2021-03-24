@@ -4,6 +4,7 @@ import cv2 as cv # For visualization purposes only
 
 from Nodes import MapNode, NodeLocation, NodeConnection
 from A_star import A_star
+from Dijkstra import Dijkstra
 
 
 class RandomMap:
@@ -163,7 +164,27 @@ def visualize_map(nodemap):
         v_image = cv.drawMarker(v_image, (marker_x, marker_y), (0, int(255.0*count/len(nodes_on_path)), 0), cv.MARKER_SQUARE, thickness=3)
         count += 1
 
-    cv.imshow("Map visualization with route", v_image)
+    cv.imshow("Map visualization with A* route", v_image)
+
+    # Run Dijkstra on the map and show the route
+    nodes_on_path, path_cost = Dijkstra.dijkstra_on_nodes(start_node, goal_node)
+    
+    print("\nDijkstra returned the following route:")
+    print(nodes_on_path)
+    print(f"Path cost: {format(path_cost, '.2f')}")
+
+    # The node ids are here known to be the indexes of the nodes in the map's list. So they can be used as such.
+    count = 0
+    for nodeid in nodes_on_path:
+        # Where to draw
+        marker_x = int(v_image.shape[1] * 0.96 * (nodemap.nodes[nodeid].location.pos_x - x_min) / x_dim) + v_image.shape[1] // 50
+        marker_y = int(v_image.shape[0] * 0.9 * (nodemap.nodes[nodeid].location.pos_y - y_min) / y_dim) + v_image.shape[0] // 20
+        # Draw a different-colored marker on the path nodes
+        v_image = cv.drawMarker(v_image, (marker_x, marker_y), (0, int(255.0*count/len(nodes_on_path)), 0), cv.MARKER_SQUARE, thickness=3)
+        count += 1
+
+    cv.imshow("Map visualization with Dijkstra route", v_image)
+
     cv.waitKey(0)
     cv.destroyAllWindows()
 
