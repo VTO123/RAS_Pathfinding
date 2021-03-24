@@ -20,13 +20,12 @@ class A_star:
         """
 
         # Nodes that have been "opened". The priority queue returns always the lowest-cost node in it.
-        # Here the nodes are not stored directly, but a tuple of the cost, node and previous node (cost, node, previous_node)
+        # Here the nodes are not stored directly, but a tuple of the cost and node (cost, node)
         open_nodes = queue.PriorityQueue(maxsize=0)
         
 
 
         # Only the start node is open at the beginning.
-        #open_nodes.put((h(start_node, goal_node), start_node, None))
         open_nodes.put(PriorityNode(h(start_node, goal_node), start_node))
 
 
